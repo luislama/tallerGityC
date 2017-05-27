@@ -14,14 +14,21 @@ void printCifrado();
 
 #define TAMANO 1024		/*tamaño del mensaje*/
 char texto[TAMANO] = {0};	/*variable donde se almacenara el mensaje*/
+char textoCiclico[TAMANO] = {0};
+char textoMorse[TAMANO] = {0}; 
 
 
 int llaveNum = 0;		/*variable donde se almacenara la llave numerica*/
 int argumentos = 1;
 int cifrar=0;
 
+char l[27]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' '};
+char m[27][12]={{". ___"},{"___ . . ."},{"___ . ___ ."},{"___ . ."},{"."},{". . ___ ."},{"___ ___ ."},{". . . ."},{". ."},{". ___ ___ ___"},{"___ . ___"},{". ____ . ."},{"___ ___"},{"___ ."},{"___ ___ ___"},{". ___ ___ ."},{"___ ___ . ___"},{". ___ ."},{". . ."},{"___"},{". . ___"},{". . . ___"},{". ___ ___"},{"___ . . ___"},{"___ . ___ ___"},{"___ ___ . ."},{"/"}};
+
+
 int main(int argc, char *argv[])
 {
+
 	argumentos = argc;
 	if(argumentos == 1)
 	{
@@ -41,7 +48,7 @@ int main(int argc, char *argv[])
 	
 	if(cifrar==1)
 		printCifrado();
-/*	printf("el mensaje es: %s",texto);*/
+	printf("\nel mensaje es: %s\n",textoCiclico);
 	return(0);
 }
 
@@ -98,6 +105,7 @@ void ciclico()
 	for(int i = 0; i <= strlen(texto); i++) 
 	{
 		c = texto[i];
+		
 		if(c<=90 && c>=64)
 		{
 			if((c+llaveNum)<=90)
@@ -117,5 +125,6 @@ void ciclico()
 			letra = c;
 		}
 		printf("%c",letra);
+		textoCiclico[i]=letra;
 	}
 }

@@ -18,29 +18,30 @@ char texto[TAMANO] = {0};	/*variable donde se almacenara el mensaje*/
 
 int llaveNum = 0;		/*variable donde se almacenara la llave numerica*/
 int argumentos = 1;
-
+int cifrar=0;
 
 int main(int argc, char *argv[])
 {
 	argumentos = argc;
 	if(argumentos == 1)
 	{
+		cifrar = 1;
 		userInput();
-		printCifrado();
-	}else if(  argumentos >=3  &&  atoi(argv[1])  )
+		/*printCifrado();*/
+	}
+	else if(  argumentos==3  &&  atoi(argv[1])  )
 	{
 		validarLlave( atoi(argv[1]) );
-
-		printf("El programa ha recivido %d argumento(s)\n",argc);
-	        for(int i=0; i<argc; i++)
-        	{
-			printf("%s\n",argv[i]);
-        	}
+		strcat(texto,argv[2]);
+		cifrar = 1;
 	}else
 	{
 		printMessageError(argv[0]);
 	}
-
+	
+	if(cifrar==1)
+		printCifrado();
+/*	printf("el mensaje es: %s",texto);*/
 	return(0);
 }
 
@@ -48,7 +49,7 @@ void printMessageError(char *name)
 {
 	printf("El programa se lo utiliza de la siguiente manera.\n");
         printf("-con parametros:\n");
-        printf("%s integer cadenaN1 cadenaN2 ... cadenaNi; Ni>0\n",name);
+        printf("%s integer \"mensaje\"\n",name);
         printf("-sin parametros:\n");
         printf("%s\n\n",name);
 }

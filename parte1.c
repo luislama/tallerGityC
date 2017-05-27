@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 void printMessageError(char *name);
-
+void validarLlave(int num);
 void userInput();
 void ciclico();
 
@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
 		printCifrado();
 	}else if(  argumentos >=3  &&  atoi(argv[1])  )
 	{
+		validarLlave( atoi(argv[1]) );
+
 		printf("El programa ha recivido %d argumento(s)\n",argc);
 	        for(int i=0; i<argc; i++)
         	{
@@ -68,24 +70,16 @@ void userInput()
 		if(llaveNum == 0)
 			 printf("\n\nLlave numérica incorrecta!");
 	}
-	if(llaveNum>26 || llaveNum<-26)
-		llaveNum %= 26;
-	if(llaveNum<0)
-		llaveNum += 26;
+	validarLlave(llaveNum);
 }
 
-void validarLlave(char num)
+void validarLlave(int num)
 {
-
-        llaveNum = atoi(&num);
-
-	if(isdigit(llaveNum))
-	{
-        	if(llaveNum>26 || llaveNum<-26)
-                	llaveNum %= 26;
-	        if(llaveNum<0)
-        	        llaveNum += 26;
-	}
+        llaveNum = num;
+      	if(llaveNum>26 || llaveNum<-26)
+               	llaveNum %= 26;
+        if(llaveNum<0)
+       	        llaveNum += 26;
 }
 
 void printCifrado()

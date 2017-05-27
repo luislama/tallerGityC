@@ -6,8 +6,8 @@
 void printMessageError(char *name);
 void validarLlave(int num);
 void userInput();
-void ciclico();
-
+void cifrado();
+int buscarIndice(char letra);
 void printCifrado();
 
 
@@ -23,7 +23,7 @@ int argumentos = 1;
 int cifrar=0;
 
 char l[27]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' '};
-char m[27][12]={{". ___"},{"___ . . ."},{"___ . ___ ."},{"___ . ."},{"."},{". . ___ ."},{"___ ___ ."},{". . . ."},{". ."},{". ___ ___ ___"},{"___ . ___"},{". ____ . ."},{"___ ___"},{"___ ."},{"___ ___ ___"},{". ___ ___ ."},{"___ ___ . ___"},{". ___ ."},{". . ."},{"___"},{". . ___"},{". . . ___"},{". ___ ___"},{"___ . . ___"},{"___ . ___ ___"},{"___ ___ . ."},{"/"}};
+char m[28][12]={{". ---"},{"--- . . ."},{"--- . --- ."},{"--- . ."},{"."},{". . --- ."},{"--- --- ."},{". . . ."},{". ."},{". --- --- ---"},{"--- . ---"},{". --- . ."},{"--- ---"},{"--- ."},{"--- --- ---"},{". --- --- ."},{"--- --- . ---"},{". --- ."},{". . ."},{"---"},{". . ---"},{". . . ---"},{". --- ---"},{"--- . . ---"},{"--- . --- ---"},{"--- --- . ."},{"   /   "},{"   "}};
 
 
 int main(int argc, char *argv[])
@@ -47,8 +47,10 @@ int main(int argc, char *argv[])
 	}
 	
 	if(cifrar==1)
+	{
+		cifrado();
 		printCifrado();
-	printf("\nel mensaje es: %s\n",textoCiclico);
+	}
 	return(0);
 }
 
@@ -92,12 +94,12 @@ void validarLlave(int num)
 
 void printCifrado()
 {
-	printf("\nMensaje Cifrado: ");
-	ciclico();
+	printf("\n\nMensaje Cifrado: %s ",textoCiclico);
+	printf("\n\nMensaje Cifrado en morse: %s ",textoMorse);
         printf("\n\n");
 }
 
-void ciclico()
+void cifrado()
 {
 	int c=0;
 	char letra = 'a';
@@ -105,7 +107,6 @@ void ciclico()
 	for(int i = 0; i <= strlen(texto); i++) 
 	{
 		c = texto[i];
-		
 		if(c<=90 && c>=64)
 		{
 			if((c+llaveNum)<=90)
@@ -123,8 +124,21 @@ void ciclico()
 		else 
 		{
 			letra = c;
+			/*strcat(textoMorse, m[26]);*/
 		}
-		printf("%c",letra);
 		textoCiclico[i]=letra;
+		strcat(  textoMorse, m[ buscarIndice(textoCiclico[i]) ]  );
+		strcat( textoMorse, m[27] );
 	}
+}
+
+int buscarIndice(char letra)
+{
+	int indice=-1;
+	for(int i=0; i<27; i++)
+	{
+		if(l[i]==letra)
+			indice = i;
+	}
+	return indice;
 }

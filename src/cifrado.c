@@ -1,4 +1,3 @@
-#include "cifrado.h"
 #define TAMANO 1024
 
 char* cifradoCiclico(char* mensaje,int llave){

@@ -6,98 +6,89 @@
 #include "cifrado.h"
 #include "codificacion.h"
 
-void printMessageError(char* name);
-void validarLlave(int num);
-void userInput();
-void printCifrado();
+#define MAX 10000
+
 void mostrarMensaje(char* mensaje);
+void mostrarMorse(char** morse);
 
-#define TAMANO 1024		/*tamaño del mensaje*/
-char texto[TAMANO] = {0};	/*variable donde se almacenara el mensaje*/
+int main(int argc, char** argv){
+	int llaveN = 0;
 
-int llaveNum = 0;		/*variable donde se almacenara la llave numerica*/
-int argumentos = 1;
-int cifrar = 0;
-
-char m[38][19]={{". ---"},{"--- . . ."},{"--- . --- ."},{"--- . ."},{"."},{". . --- ."},{"--- --- ."},{". . . ."},{". ."},{". --- --- ---"},{"--- . ---"},{". --- . ."},{"--- ---"},{"--- ."},{"--- --- ---"},{". --- --- ."},{"--- --- . ---"},{". --- ."},{". . ."},{"---"},{". . ---"},{". . . ---"},{". --- ---"},{"--- . . ---"},{"--- . --- ---"},{"--- --- . ."},{". --- --- --- ---"},{". . --- --- ---"},{". . . --- ---"},{". . . . ---"},{". . . . ."},{"--- . . . ."},{"--- --- . . ."},{"--- --- --- . ."},{"--- --- --- --- ."},{"--- --- --- --- ---"},{"/"},{"   "}};
-
-
-int main(int argc, char *argv[])
-{
-	argumentos = argc;
-	if(argumentos == 1)
-	{
-		cifrar = 1;
-		userInput();
-		/*printCifrado();*/
+	if (argc == 4){
+		if (argv[3][0]=='-' && argv[3][1]=='c'){
+			llaveN = atoi(argv[1]);
+			if (llaveN == 0){
+				printf("No puede ingresar ese valor de llave\n\n");
+			}
+			else{
+				char* mensajeCifrado = cifradoCiclico(argv[2],llaveN);
+				printf("Mensaje cifrado: ");
+				mostrarMensaje(mensajeCifrado);
+				char** mensajeMorse = claveMorse(mensajeCifrado);
+				printf("Mensaje cifrado en morse: ");
+				mostrarMorse(mensajeMorse);
+			}
+		}
+		else if (argv[3][0]=='-' && argv[3][1]=='a'){
+			char* mensajeCifrado = cifradoAutollave(argv[2],argv[1]);
+			printf("\nMensaje cifrado: ");
+			mostrarMensaje(mensajeCifrado);
+			char** mensajeMorse = claveMorse(mensajeCifrado);
+			printf("Mensaje cifrado en morse: ");
+			mostrarMorse(mensajeMorse);
+		}
+		else if (argv[3][0]=='-' && argv[3][1]=='p'){
+			char* mensajeCifrado = cifradoContrasenia(argv[2],argv[1]);
+			printf("\nMensaje cifrado: ");
+			mostrarMensaje(mensajeCifrado);
+			char** mensajeMorse = claveMorse(mensajeCifrado);
+			printf("Mensaje cifrado en morse: ");
+			mostrarMorse(mensajeMorse);
+		}
+		else{
+			printf("Tipo de cifrado invalido\n\n");
+		}
 	}
-	else if(argumentos==3  &&  atoi(argv[1]))
-	{
-		validarLlave( atoi(argv[1]) );
-		strcat(texto,argv[2]);
-		cifrar = 1;
-	}else
-		printMessageError(argv[0]);
+	else if (argc == 1){
+		printf("\nTipo de cifrado: ");
+		char c = getchar();
+		if (c=='C' || c=='c'){
+			printf("\nCifrado Ciclico");
+			printf("\nIngrese mensaje a cifrar: ");
+			printf("\nIngrese clave numerica: ");
+			//char* mensajeCifrado = cifradoCiclico(mensaje,llaveN);
+			//mostrarMensaje(mensajeCifrado);
+		}
+		else if (c=='A' || c=='a'){
 
+		}
+		else if (c=='P' || c=='p'){
 
-	if(cifrar==1)
-	{
-		char* textoCifrado = cifradoCiclico(texto,llaveNum);
-		mostrarMensaje(textoCifrado);
+		}
+		else{
+			printf("Tipo de cifrado invalido\n");
+		}
 	}
-	return(0);
-}
-
-void printMessageError(char *name)
-{
-	printf("El programa se lo utiliza de la siguiente manera.\n");
-        printf("-con parametros:\n");
-        printf("%s integer \"mensaje\"\n",name);
-        printf("-sin parametros:\n");
-        printf("%s\n\n",name);
-}
-
-void userInput()
-{
-	char llave[30]={0};
-
-        printf("\nCifrado Cíclico");
-
-        printf("\n\nIngrese mensaje a cifrar: ");
-        scanf("%1024[^\n]", texto);
-
-	while(llaveNum == 0)
-	{
-	        printf("\nIngrese la llave numérica: ");
-        	scanf("%s", llave);
-	        llaveNum = atoi(llave);
-		if(llaveNum == 0)
-			 printf("\n\nLlave numérica incorrecta!");
+	else{
+		printf("No puede llamar al programa con esos parametros...\n\n");
 	}
-	validarLlave(llaveNum);
+	return 0;
 }
-
-void validarLlave(int num)
-{
-        llaveNum = num;
-      	if(llaveNum>26 || llaveNum<-26)
-               	llaveNum %= 26;
-        if(llaveNum<0)
-       	        llaveNum += 26;
-}
-
-/*void printCifrado()
-{
-	printf("\n\nMensaje Cifrado: %s ",textoCiclico);
-	printf("\n\nMensaje Cifrado en morse: %s ",textoMorse);
-        printf("\n\n");
-}*/
 
 void mostrarMensaje(char* mensaje){
 	int i=0;
 	while (mensaje[i]!='\0'){
 		printf("%c", mensaje[i]);
 		i++;
+	}
+	printf("\n");
+}
+
+void mostrarMorse(char** morse){
+	int c=0;
+	while (morse[c]) {
+		printf("%s", morse[c]);
+		c++;
 	}
 	printf("\n\n");
 }

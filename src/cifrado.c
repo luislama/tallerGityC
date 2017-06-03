@@ -1,51 +1,53 @@
-#define TAMANO 1024
+#include <stdlib.h>
+#include <string.h>
+#define TAMANO 100000
 
-char* cifradoCiclico(char* mensaje,int llave){
-  char* cifrado = {0};
-  llave = llave%26;
-	for (int i=0; i<TAMANO-1; i++){ //recorre el arreglo de caracteres
-		int caracter = (int)mensaje[i];
-		if (caracter!='\0'){ //verifica que no sea el ultimo caracter
-			if ((caracter>=65 && caracter<=90) || (caracter>=97 && caracter<=122)){
-				int suma = caracter + llave;
-				if (llave>0){ //para llaves positivas
-					if (caracter>=65 && caracter<=90){ //verifica rango de mayusculas
-							if (suma > 90)
-								caracter = 64 + (suma-90);
-							else
-								caracter += llave;
-					}else{ //rango de minusculas
-							if (suma > 122)
-								caracter = 96 + (suma-122);
-							else
-								caracter += llave;
-					}
-				}else{ //para llaves negativas
-					if (caracter>=65 && caracter<=90){ //rango de mayusculas
-							if (suma < 65)
-								caracter = 91 + (suma-65);
-							else
-								caracter += llave;
-					}else{ //rango de minusculas
-							if (suma < 97)
-								caracter = 123 + (suma-97);
-							else
-								caracter += llave;
-					}
-				}
-				cifrado[i]=caracter;
-			}
-		}else
-			break;
-	} //cierre for
+char* cifradoCiclico(char* mensaje,int llave)
+{
+  char* cifrado = (char *) malloc(sizeof(char) * TAMANO);
+	int c=0;
+	char letra = 'a';
+
+	for(int i = 0; i <= strlen(mensaje); i++)
+	{
+		c = mensaje[i];
+		if(c<=57 && c>=48)
+		{
+			if((c+llave)<=57)
+				letra = c + llave;
+			else
+				letra = 47+(c+llave-57);
+		}
+		else if(c<=90 && c>=65)
+		{
+			if((c+llave)<=90)
+				letra = c + llave;
+			else
+        letra = 64+(c+llave-90);
+		}
+		else if(c<=122 && c>=97)
+		{
+      if((c+llave)<=122)
+        letra = c + llave;
+      else
+        letra = 96+(c+llave-122);
+    }
+		else
+		{
+			letra = c;
+		}
+		cifrado[i]=letra;
+	}
   return cifrado;
 }
 
 
-/*char* cifradoAutollave(char* mensaje, char* llave){
-
+char* cifradoAutollave(char* mensaje, char* llave){
+  char * cifrado = {0};
+  return cifrado;
 }
 
 char* cifradoContrasenia(char* mensaje, char* llave){
-
-}*/
+  char * cifrado = {0};
+  return cifrado;
+}

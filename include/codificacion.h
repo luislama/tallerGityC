@@ -1,1 +1,1 @@
-char* claveMorse(char* mensaje);
+char** claveMorse(char* mensaje);

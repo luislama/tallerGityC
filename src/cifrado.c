@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#define TAMANO 100000
+#define TAMANO 10000
 
 char* cifradoCiclico(char* mensaje,int llave)
 {
@@ -68,6 +68,9 @@ char* cifradoAutollave(char* mensaje, char* llave)
 	strcat( llaveA, llave);
 	strcat( llaveA, mensajeA);		//MARAZULHOLA PEDRO
 
+	printf("mensaje: %s\n",mensajeA);
+	printf("llave: %s\n",llaveA);
+
 
 	int c = 0;
 	int d = 0;
@@ -84,6 +87,8 @@ char* cifradoAutollave(char* mensaje, char* llave)
                 llaveA[i] = llaveA[j];
                 j++;
 	}					//MARAZULHOLAPEDRO
+
+	printf("llave Completa: %s\n",llaveA);
 
 	char letra = 'a';
 	int mayus = 1;
@@ -125,6 +130,7 @@ char* cifradoAutollave(char* mensaje, char* llave)
 			cifrado[i] = letra;
 		}
 	}
+	printf("Mensaje en autollave: %s",cifrado);
 	return cifrado;
 }
 
@@ -132,8 +138,8 @@ char* cifradoContrasenia(char* mensaje, char* llave)
 {
 	char* cifrado = (char *) malloc(sizeof(char) * TAMANO);
 
-        char mensajeA[MAX]={0};
-        char llaveA[MAX]={0};
+        char mensajeA[TAMANO]={0};
+        char llaveA[TAMANO]={0};
 
         strcat( mensajeA, mensaje);
         strcat( llaveA, llave);
@@ -188,6 +194,6 @@ char* cifradoContrasenia(char* mensaje, char* llave)
                         cifrado[i] = letra;
                 }
         }
-
+	printf("Mensaje en contrasenia: %s",cifrado);
 	return cifrado;
 }

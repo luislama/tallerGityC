@@ -31,6 +31,9 @@ int main(int argc, char** argv){
 					}
 				}
 				else if (argv[3][0]=='-' && argv[3][1]=='a'){
+					//strcat(mensaje,*cifradoAutollave(argv[2],argv[1]) );
+					//printf("Mensaje cifrado: %s",mensaje);
+					//printf("Mensaje cifrado: %s",cifradoAutollave(argv[2],argv[1]) );
 					mensajeCifrado = cifradoAutollave(argv[2],argv[1]);
 				}
 				else {

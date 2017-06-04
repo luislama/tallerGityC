@@ -10,33 +10,39 @@
 
 void mostrarMensaje(char* mensaje);
 void mostrarMorse(char** morse);
+void validarLlave(int llaveNum);
+
 char mensaje[MAX] = {0};
 char llave[MAX] = {0};
 
 int main(int argc, char** argv){
 	int llaveN = 0;
 
-	if (argc == 4){
+	if (argc == 4)
+	{
 		if ( (argv[3][0]=='-' && argv[3][1]=='c') || (argv[3][0]=='-' && argv[3][1]=='a')
-			|| (argv[3][0]=='-' && argv[3][1]=='p') ){
+			|| (argv[3][0]=='-' && argv[3][1]=='p') )
+		{
 				char* mensajeCifrado;
 				if (argv[3][0]=='-' && argv[3][1]=='c'){
 					llaveN = atoi(argv[1]);
-					if (llaveN == 0){
+					if (llaveN == 0)
+					{
 						printf("No puede ingresar ese valor de llave\n\n");
 						return 0;
 					}
-					else{
+					else
+					{
+						validarLlave(llaveN);
 						mensajeCifrado = cifradoCiclico(argv[2],llaveN);
 					}
 				}
-				else if (argv[3][0]=='-' && argv[3][1]=='a'){
-					//strcat(mensaje,*cifradoAutollave(argv[2],argv[1]) );
-					//printf("Mensaje cifrado: %s",mensaje);
-					//printf("Mensaje cifrado: %s",cifradoAutollave(argv[2],argv[1]) );
+				else if (argv[3][0]=='-' && argv[3][1]=='a')
+				{
 					mensajeCifrado = cifradoAutollave(argv[2],argv[1]);
 				}
-				else {
+				else
+				{
 					mensajeCifrado = cifradoContrasenia(argv[2],argv[1]);
 				}
 				printf("Mensaje cifrado: ");
@@ -63,12 +69,13 @@ int main(int argc, char** argv){
 
 			while(llaveN == 0)
 			{
-	      printf("Ingrese la llave numerica: ");
-	    	scanf("%s", llave);
-	      llaveN = atoi(llave);
+				printf("Ingrese la llave numerica: ");
+				scanf("%s", llave);
+				llaveN = atoi(llave);
 				if(llaveN == 0)
 			 		printf("\nLlave numérica incorrecta!\n");
 			}
+			validarLlave(llaveN);
 			mensajeCifrado = cifradoCiclico(mensaje,llaveN);
 		}
 
@@ -77,7 +84,7 @@ int main(int argc, char** argv){
 			printf("\nIngrese el mensaje a cifrar: ");
 			scanf(" %[^\n]", mensaje);
 			printf("Ingrese la llave: ");
-			scanf(" %[^\n]", llave); //ME VALIO VALIDAR LA LLAVE
+			scanf(" %[^\n]", llave);
 			mensajeCifrado = cifradoAutollave(mensaje,llave);
 		}
 
@@ -121,4 +128,12 @@ void mostrarMorse(char** morse){
 		c++;
 	}
 	printf("\n\n");
+}
+
+void validarLlave(int llaveNum)
+{
+      	if(llaveNum>26 || llaveNum<-26)
+               	llaveNum %= 26;
+        if(llaveNum<0)
+       	        llaveNum += 26;
 }

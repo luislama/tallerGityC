@@ -5,7 +5,8 @@
 char* cifradoCiclico(char* mensaje,int llave)
 {
 
-	int key = validarLlave(llave);
+//	int key = validarLlave(llave);
+	int key = llave;
 	char* cifrado = (char *) malloc(sizeof(char) * TAMANO);
 
 	int c=0;
@@ -44,15 +45,6 @@ char* cifradoCiclico(char* mensaje,int llave)
 	return cifrado;
 }
 
-int validarLlave(int num){
-	int llaveNum = num;
-	if(llaveNum>26 || llaveNum<-26)
-		llaveNum %= 26;
-	if(llaveNum<0)
-		llaveNum += 26;
-	return llaveNum;
-}
-
 char* cifradoAutollave(char* mensaje, char* llave)
 {
 	char* cifrado = (char *) malloc(sizeof(char) * TAMANO);
@@ -60,24 +52,19 @@ char* cifradoAutollave(char* mensaje, char* llave)
 	//no quiero hacer for, y el strcat me da problemas con
 	//los char* texto = "letras";
 
-	char* mensajeA[TAMANO] = {0};	//Guarda HOLA PEDRO
-	char* llaveA[TAMANO] = {0};	//Me da MARAZULHOLA PEDRO
+	char mensajeA[TAMANO] = {0};	//Guarda HOLA PEDRO
+	char llaveA[TAMANO] = {0};	//Me da MARAZULHOLA PEDRO
 					//usando strcat
 
 	strcat( mensajeA, mensaje);
 	strcat( llaveA, llave);
 	strcat( llaveA, mensajeA);		//MARAZULHOLA PEDRO
 
-	printf("mensaje: %s\n",mensajeA);
-	printf("llave: %s\n",llaveA);
 
-
-	int c = 0;
-	int d = 0;
 	int j = 0;
-	for(int i=0; i<strlen(llaveA); i++)
+	int d = 0;
+	for(int i = 0; i<strlen(llaveA); i++)
 	{
-		c = llaveA[i];
 		d = llaveA[j];
 		while( d<65 || (d>90 && d<97) ||  d>122 )
                 {
@@ -88,8 +75,7 @@ char* cifradoAutollave(char* mensaje, char* llave)
                 j++;
 	}					//MARAZULHOLAPEDRO
 
-	printf("llave Completa: %s\n",llaveA);
-
+	int c = 0;
 	char letra = 'a';
 	int mayus = 1;
 	int noLetra = 0;
@@ -130,7 +116,6 @@ char* cifradoAutollave(char* mensaje, char* llave)
 			cifrado[i] = letra;
 		}
 	}
-	printf("Mensaje en autollave: %s",cifrado);
 	return cifrado;
 }
 
@@ -194,6 +179,6 @@ char* cifradoContrasenia(char* mensaje, char* llave)
                         cifrado[i] = letra;
                 }
         }
-	printf("Mensaje en contrasenia: %s",cifrado);
+//	printf("Mensaje en contrasenia: %s",cifrado);
 	return cifrado;
 }

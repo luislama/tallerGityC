@@ -10,7 +10,7 @@
 
 void mostrarMensaje(char* mensaje);
 void mostrarMorse(char** morse);
-void validarLlave(int llaveNum);
+int validarLlave(int llaveNum);
 
 char mensaje[MAX] = {0};
 char llave[MAX] = {0};
@@ -33,7 +33,7 @@ int main(int argc, char** argv){
 					}
 					else
 					{
-						validarLlave(llaveN);
+						llaveN=validarLlave(llaveN);
 						mensajeCifrado = cifradoCiclico(argv[2],llaveN);
 					}
 				}
@@ -75,7 +75,7 @@ int main(int argc, char** argv){
 				if(llaveN == 0)
 			 		printf("\nLlave numérica incorrecta!\n");
 			}
-			validarLlave(llaveN);
+			llaveN = validarLlave(llaveN);
 			mensajeCifrado = cifradoCiclico(mensaje,llaveN);
 		}
 
@@ -130,10 +130,12 @@ void mostrarMorse(char** morse){
 	printf("\n\n");
 }
 
-void validarLlave(int llaveNum)
+int validarLlave(int llaveNum)
 {
+	int llaveNumA = llaveNum;
       	if(llaveNum>26 || llaveNum<-26)
-               	llaveNum %= 26;
+               	llaveNumA %= 26;
         if(llaveNum<0)
-       	        llaveNum += 26;
+       	        llaveNumA += 26;
+	return llaveNumA;
 }
